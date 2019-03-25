@@ -1,14 +1,8 @@
 <template>
 <div :class="zoomer_box">
     <div class="preview-box" >
-        <img v-if="baseZoomerOptions.zoomFactor > 0"
-             :src="previewImg.url"
+        <img :src="previewImg.url"
              :data-zoom="previewLargeImg.url"
-             class="responsive-image"
-             draggable="false"
-        />
-        <img v-else
-             :src="previewImg.url"
              class="responsive-image"
              draggable="false"
         />
@@ -156,10 +150,13 @@ export default {
 
         this.options.injectBaseStyles = true;
         let previewImg = "." + this.zoomer_box + ">div>img";
-        this.drift = new Drift(
-          document.querySelector(previewImg),
-          this.options
-        );
+
+        if (this.baseZoomerOptions.zoomFactor > 0) {
+          this.drift = new Drift(
+            document.querySelector(previewImg),
+            this.options
+          );
+        }
         clearInterval(t);
       }
     }, 500);
